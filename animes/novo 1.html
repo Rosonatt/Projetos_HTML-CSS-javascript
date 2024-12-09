@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnimeStream - Sua Plataforma de Anime Online</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #f47521;
+            --secondary-color: #23252b;
+            --text-color: #ffffff;
+            --background-color: #1a1c20;
+            --hover-color: #e0610e;
+            --button-hover-color: #d0571d; 
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--background-color);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style-type: none;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        #searchInput {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px 0 0 20px;
+            font-size: 14px;
+            width: 200px;
+        }
+
+        #searchButton {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 0 20px 20px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #searchButton:hover {
+            background-color: var(--hover-color);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        #loginBtn, #signupBtn {
+            background-color: var(--primary-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            border: none;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        #loginBtn:hover, #signupBtn:hover {
+            background-color: var(--button-hover-color);
+            transform: scale(1.05);
+        }
+
+        main {
+            margin-top: 80px;
+        }
+
+        .hero {
+            background: url('My_hero_Academia_Banner.WEBP') no-repeat center center;
+            background-size: cover;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--text-color);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-description {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: var(--text-color);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .cta-button {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 18px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-3px);
+        }
+
+        .featured-section,
+        .recommendations,
+        .recently-released {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .anime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .anime-card {
+            background-color: var(--background-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .anime-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .anime-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .anime-info {
+            padding: 15px;
+        }
+
+        .anime-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .anime-genre {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .footer-section {
+            flex: 1;
+            margin-right: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .footer-section ul {
+            list-style-type: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-icons {
+            display: flex;
+            margin-top: 15px;
+            justify-content: flex-start; 
+        }
+
+        .social-icons a {
+            color: var(--text-color);
+            font-size: 20px;
+            margin-right: 15px; 
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+        }
+
+        /* Estilo do modal */
+        .modal {
+            display: none; /* Oculto por padrão */
+            position: fixed; /* Fixo na tela */
+            z-index: 1000; /* Colocado em cima de outros elementos */
+            left: 0;
+            top: 0;
+            width: 100%; /* Largura total */
+            height: 100%; /* Altura total */
+            overflow: auto; /* Adiciona scroll se necessário */
+            background-color: rgba(0, 0, 0, 0.7); /* Fundo preto com opacidade */
+        }
+
+        .modal-content {
+            background-color: #fefefe; /* Fundo do modal */
+            margin: 15% auto; /* Margem no topo e centralizado */
+            padding: 20px; /* Espaçamento interno */
+            border: 1px solid #888; /* Borda do modal */
+            width: 80%; /* Largura do modal */
+            max-width: 400px; /* Largura máxima */
+            border-radius: 10px; /* Cantos arredondados */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra do modal */
+        }
+
+        /* Estilo dos inputs e botões */
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%; /* Largura total */
+            padding: 10px; /* Espaçamento interno */
+            margin: 10px 0; /* Margem em cima e embaixo */
+            border: 1px solid #ccc; /* Borda */
+            border-radius: 5px; /* Cantos arredondados */
+            box-sizing: border-box; /* Inclui padding e border no tamanho total */
+        }
+
+        button {
+            background-color: var(--primary-color); /* Cor do botão */
+            color: white; /* Cor do texto */
+            padding: 10px; /* Espaçamento interno */
+            border: none; /* Sem borda */
+            border-radius: 5px; /* Cantos arredondados */
+            cursor: pointer; /* Muda o cursor */
+            width: 100%; /* Largura total */
+            font-size: 16px; /* Tamanho da fonte */
+        }
+
+        button:hover {
+            background-color: var(--hover-color); /* Cor do botão ao passar o mouse */
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container header-content">
+        <a href="#" class="logo">AnimeStream</a>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Anime</a></li>
+                <li><a href="#">Manga</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="#">Contato</a></li>
+            </ul>
+        </nav>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Buscar animes...">
+            <button id="searchButton">Buscar</button>
+        </div>
+        <div class="user-actions">
+            <button id="loginBtn" onclick="openModal('loginModal')">Entrar</button>
+            <button id="signupBtn" onclick="openModal('signupModal')">Cadastrar</button>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+    <div class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">AnimeStream - Assista Seus Animes Favoritos</h1>
+            <p class="hero-description">A melhor plataforma para streaming de animes online!</p>
+            <a href="#" class="cta-button">Começar Agora</a>
+        </div>
+    </div>
+
+    <section class="featured-section">
+        <h2 class="section-title">Em Destaque</h2>
+        <div class="anime-grid">
+            <!-- Anime cards -->
+            <div class="anime-card">
+                <img src="anime1.jpg" alt="Anime 1">
+                <div class="anime-info">
+                    <h3 class="anime-title">Anime 1</h3>
+                    <p class="anime-genre">Ação, Aventura</p>
+                </div>
+            </div>
+            <div class="anime-card">
+                <img src="anime2.jpg" alt="Anime 2">
+                <div class="anime-info">
+                    <h3 class="anime-title">Anime 2</h3>
+                    <p class="anime-genre">Comédia, Romance</p>
+                </div>
+            </div>
+            <!-- Adicione mais cards conforme necessário -->
+        </div>
+    </section>
+
+    <section class="recommendations">
+        <h2 class="section-title">Recomendações</h2>
+        <div class="anime-grid">
+            <!-- Anime cards -->
+            <div class="anime-card">
+                <img src="anime3.jpg" alt="Anime 3">
+                <div class="anime-info">
+                    <h3 class="anime-title">Anime 3</h3>
+                    <p class="anime-genre">Fantasia, Ação</p>
+                </div>
+            </div>
+            <div class="anime-card">
+                <img src="anime4.jpg" alt="Anime 4">
+                <div class="anime-info">
+                    <h3 class="anime-title">Anime 4</h3>
+                    <p class="anime-genre">Drama, Ação</p>
+                </div>
+            </div>
+            <!-- Adicione mais cards conforme necessário -->
+        </div>
+    </section>
+
+    <section class="recently-released">
+        <h2 class="section-title">Recentemente Lançados</h2>
+        <div class="anime-grid">
+            <!-- Anime cards -->
+            <div class="anime-card">
+                <img src="anime5.jpg" alt="Anime 5">
+                <div class="anime-info">
+                    <h3 class="anime-title">Anime 5</h3>
+                    <p class="anime-genre">Aventura, Fantasia</p>
+                </div>
+            </div>
+            <div class="anime-card">
+                <img src="anime6.jpg" alt="Anime 6">
+                <div class="anime-info">
+                    <h3 class="anime-title">Anime 6</h3>
+                    <p class="anime-genre">Comédia, Slice of Life</p>
+                </div>
+            </div>
+            <!-- Adicione mais cards conforme necessário -->
+        </div>
+    </section>
+</main>
+
+<!-- Modais para Login e Cadastro -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('loginModal')">&times;</span>
+        <h2 style="text-align: center; color: #333;">Entrar</h2>
+        <form id="loginForm">
+            <input type="text" placeholder="Email" required>
+            <input type="password" placeholder="Senha" required>
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+</div>
+
+<div id="signupModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('signupModal')">&times;</span>
+        <h2 style="text-align: center; color: #333;">Cadastrar</h2>
+        <form id="signupForm">
+            <input type="text" placeholder="Nome" required>
+            <input type="email" placeholder="Email" required>
+            <input type="password" placeholder="Senha" required>
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+</div>
+
+<footer>
+    <div class="container footer-content">
+        <div class="footer-section">
+            <h3>Sobre Nós</h3>
+            <ul>
+                <li><a href="#">Nossa História</a></li>
+                <li><a href="#">Equipe</a></li>
+                <li><a href="#">Trabalhe Conosco</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Links Úteis</h3>
+            <ul>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Termos de Uso</a></li>
+                <li><a href="#">Política de Privacidade</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Siga-nos</h3>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="copyright">
+        &copy; 2024 AnimeStream. Todos os direitos reservados.
+    </div>
+</footer>
+
+<script>
+    function openModal(modalId) {
+        document.getElementById(modalId).style.display = "block";
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
+    }
+
+    // Fechar o modal ao clicar fora dele
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            closeModal('loginModal');
+            closeModal('signupModal');
+        }
+    }
+</script>
+
+</body>
+</html>
+
